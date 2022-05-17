@@ -11,10 +11,44 @@ public class TrainingSet
 
 public class Perceptron : MonoBehaviour {
 
-	public TrainingSet[] ts;
+	List<TrainingSet> ts = new List<TrainingSet>();
 	double[] weights = {0,0};
 	double bias = 0;
-	double totalError = 0;
+
+	// the Ethan npc, which Perceptron will control
+	public GameObject npc;
+
+	void Start()
+    {
+		InitialiseWeights();
+    }
+
+	public void SendInput(double i1, double i2, double o)
+	{
+		// take two inputs calculate against a desired output 
+		/*
+		red sphere => 0
+		red cube => 1
+		green sphere => 1
+		green cube => 1
+		 */
+		double result = CalcOutput(i1, i2);
+		Debug.Log(result);
+		if (result == 0)
+		{
+			npc.GetComponent<Animator>().SetTrigger("Crouch");
+		}
+		else
+		{
+			npc.GetComponent<Rigidbody>().isKinematic = true;
+		}
+
+		TrainingSet s = new TrainingSet();
+		s.input = new double[2] { i1, i2 };
+		s.output = o;
+		ts.Add(s);
+		Train();
+	}
 
 	double DotProductBias(double[] v1, double[] v2) 
 	{
@@ -64,7 +98,6 @@ public class Perceptron : MonoBehaviour {
 	void UpdateWeights(int j)
 	{
 		double error = ts[j].output - CalcOutput(j);
-		totalError += Mathf.Abs((float)error);
 		for(int i = 0; i < weights.Length; i++)
 		{			
 			weights[i] = weights[i] + error*ts[j].input[i]; 
@@ -72,28 +105,11 @@ public class Perceptron : MonoBehaviour {
 		bias += error;
 	}
 
-	void Train(int epochs)
+	void Train()
 	{
-		InitialiseWeights();
-		
-		for(int e = 0; e < epochs; e++)
-		{
-			totalError = 0;
-			for(int t = 0; t < ts.Length; t++)
+			for(int t = 0; t < ts.Count; t++)
 			{
 				UpdateWeights(t);
-				Debug.Log("W1: " + (weights[0]) + " W2: " + (weights[1]) + " B: " + bias);
 			}
-			Debug.Log("TOTAL ERROR: " + totalError);
-		}
-	}
-
-
-	void Start () {
-
-	}
-	
-	void Update () {
-		
 	}
 }

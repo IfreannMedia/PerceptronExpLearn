@@ -1412,6 +1412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 789451826}
   - component: {fileID: 789451825}
+  - component: {fileID: 789451827}
   m_Layer: 0
   m_Name: Perceptron
   m_TagString: Untagged
@@ -1431,7 +1432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5cee44792b34921bed2a2de5f80035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: []
+  npc: {fileID: 798503929}
 --- !u!4 &789451826
 Transform:
   m_ObjectHideFlags: 0
@@ -1446,6 +1447,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &789451827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789451824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199dfcec06563ed49916bf90dfdb99ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spherePrefab: {fileID: 1733662436706150, guid: c8ad6dc2bd62744ab9f4c2430b97f35f, type: 3}
+  cubePrefab: {fileID: 1489190192402526, guid: c66a055afc8284d039725a9e0d0db3d1, type: 3}
+  green: {fileID: 2100000, guid: ba3a63e8d6b114f02b957e03c09403ba, type: 2}
+  red: {fileID: 2100000, guid: 1610655a116ac473ea7205b56afbcb80, type: 2}
 --- !u!1 &798503929
 GameObject:
   m_ObjectHideFlags: 0
