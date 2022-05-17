@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [System.Serializable]
 public class TrainingSet
@@ -50,6 +50,7 @@ public class Perceptron : MonoBehaviour {
 		Train();
 	}
 
+	//v1 is weights, v2 is inputs
 	double DotProductBias(double[] v1, double[] v2) 
 	{
 		if (v1 == null || v2 == null)
@@ -111,5 +112,42 @@ public class Perceptron : MonoBehaviour {
 			{
 				UpdateWeights(t);
 			}
+	}
+
+	void LoadWeights()
+    {
+		string path = Application.dataPath + "/weights.txt";
+        if (File.Exists(path))
+        {
+			var sr = File.OpenText(path);
+			string line = sr.ReadLine();
+			string[] w = line.Split(',');
+			weights[0] = System.Convert.ToDouble(w[0]);
+			weights[1] = System.Convert.ToDouble(w[1]);
+			bias = System.Convert.ToDouble(w[2]);
+			Debug.Log("Loading");
+		}
+    }
+
+	void SaveWeights()
+    {
+		string path = Application.dataPath + "/weights.txt";
+		var sr = File.CreateText(path);
+		sr.WriteLine(weights[0] + "," + weights[1] + "," + bias);
+		sr.Close();
+	}
+
+	void Update()
+    {
+		if (Input.GetKeyDown("s"))
+			SaveWeights();
+		else if (Input.GetKeyDown("l"))
+			LoadWeights();
+		else if (Input.GetKeyDown("space"))
+        {
+			InitialiseWeights();
+			ts.Clear();
+        }
+
 	}
 }
